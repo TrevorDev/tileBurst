@@ -2,10 +2,9 @@ function update()
 {
 	global.stats.begin();
 	if(global.controller.keyHasBeenPressed){
-		if(global.controller.keyHasBeenPressed=='left'){
 
-		}
 		global.currentLevel.runFrame()
+		global.currentLevel.movePlayer(global.controller.keyHasBeenPressed)
 		global.currentLevel.draw()
 		global.screen.render();
 	}

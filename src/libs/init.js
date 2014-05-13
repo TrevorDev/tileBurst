@@ -43,15 +43,24 @@ function onReady()
 	});
 
 	global.currentLevel = new LevelMap([
-		" .         .                        ",
-		"  .  O     .                        ",
-		"           .                        ",
-		"           .                        ",
-		"           .                        ",
-		"               X          .         ",
-		"         .                          "
+		"      O                             ",
+		"  .   O                             ",
+		"      O                             ",
+		"      O                             ",
+		"      O          X                  ",
+		"      O                             ",
+		"      O                             ",
+		"      O                             ",
+		"      O                             ",
+		"      O                             ",
+		"      O                             ",
+		"      O                             ",
+		"      O                             ",
+		"                                    ",
+		"                                    ",
+		"                                    "
 	])
-	global.currentLevel.print()
+	//global.currentLevel.print()
 
 	resize();
 	requestAnimFrame(update);
