@@ -43,7 +43,7 @@ function GraphNode(x,y,type) {
         y: y
     };
     this.type = type
-    if(this.type == "O"){
+    if(this.isWall()){
         this.cost = 1000
     }else{
         this.cost = 1
@@ -57,7 +57,7 @@ GraphNode.prototype.toString = function() {
 };
 
 GraphNode.prototype.isWall = function() {
-    return (this.type == "O");
+    return (this.type == "O" || this.type == ".");
 };
 
 

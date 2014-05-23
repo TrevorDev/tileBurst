@@ -4,6 +4,8 @@ function LevelMap(map){
 	this.width = map[0].length
 	this.height = map.length
 
+	this.frameCount = 0;
+
 	this.viewWidth = 5
 	this.viewHeight = 3
 
@@ -13,8 +15,9 @@ function LevelMap(map){
 	this.viewPosX = 0
 	this.viewPosY = 0
 
-	this.characterTexture =  new PIXI.Texture.fromImage("assets/characters/nifty/nifty.png")
+	this.characterTexture =  new PIXI.Texture.fromImage("assets/colors/blue.png")
 	this.badGuyTexture =  new PIXI.Texture.fromImage("assets/colors/red.png")
+	this.wallTexture =  new PIXI.Texture.fromImage("assets/colors/black.png")
 	this.sprites = []
 
 	for(var i = 0;i<this.height;i++){
@@ -58,7 +61,7 @@ function LevelMap(map){
 					}else if(this.getTile(j, i) == 'X'){
 						var newSprite = new PIXI.Sprite(this.characterTexture)
 					}else if(this.getTile(j, i) == 'O'){
-						var newSprite = new PIXI.Sprite(this.badGuyTexture)
+						var newSprite = new PIXI.Sprite(this.wallTexture)
 					}
 					newSprite.x = j*global.screen.canvas.width/this.viewWidth
 					newSprite.y = i*global.screen.canvas.height/this.viewHeight
@@ -92,15 +95,17 @@ function LevelMap(map){
 		map[y2][x2] = tmp;
 	}
 
-	this.moveBadGuy = function(x, y){		
-		var graphMap = new Graph(this.map)
-		var player = this.getGetPlayer()
-		var start = graphMap.nodes[y][x]
-		var end = graphMap.nodes[player.y][player.x]
-		var ret = astar.search(graphMap, start, end)
-		console.log(ret)
-		if(this.getTile(ret[0].x, ret[0].y) == ' '){
-			this.swapTiles(x,y,ret[0].x,ret[0].y)
+	this.moveBadGuy = function(x, y){	
+		if(this.frameCount % 2 == 0)	{
+			var graphMap = new Graph(this.map)
+			var player = this.getGetPlayer()
+			var start = graphMap.nodes[y][x]
+			var end = graphMap.nodes[player.y][player.x]
+			var ret = astar.search(graphMap, start, end)
+			console.log(ret)
+			if(this.getTile(ret[0].x, ret[0].y) == ' '){
+				this.swapTiles(x,y,ret[0].x,ret[0].y)
+			}
 		}
 	}
 
@@ -115,6 +120,7 @@ function LevelMap(map){
 	}
 
 	this.movePlayer = function(move){
+		this.createCopyMap()
 		for(var i = 0;i<this.height;i++){
 			for(var j = 0;j<this.width;j++){
 				if(this.getTile(j,i, this.copyMap)=='X'){
@@ -138,6 +144,7 @@ function LevelMap(map){
 	}
 
 	this.runFrame = function(){
+		this.frameCount++;
 		this.createCopyMap()
 		for(var i = 0;i<this.height;i++){
 			for(var j = 0;j<this.width;j++){

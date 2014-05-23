@@ -2,9 +2,8 @@ function update()
 {
 	global.stats.begin();
 	if(global.controller.keyHasBeenPressed){
-
-		global.currentLevel.runFrame()
 		global.currentLevel.movePlayer(global.controller.keyHasBeenPressed)
+		global.currentLevel.runFrame()
 		global.currentLevel.draw()
 		global.screen.render();
 	}

@@ -43,27 +43,50 @@ function onReady()
 	});
 
 	global.currentLevel = new LevelMap([
-		"      O                             ",
-		"  .   O                             ",
-		"      O                             ",
-		"      O                             ",
-		"      O          X                  ",
-		"      O                             ",
-		"      O                             ",
-		"      O                             ",
-		"      O                             ",
-		"      O                             ",
-		"      O                             ",
-		"      O                             ",
-		"      O                             ",
-		"                                    ",
-		"                                    ",
-		"                                    "
+		"      O                                                                              ",
+		"  .   O                                                                              ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O          X                                                                   ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O                                                                              ",
+		"      O                           X                                                  ",
+		"                                                                                     ",
+		"                                             .                                       ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                     .                               ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                               .                                                     ",
+		"                                                                                     ",
+		"                                          .                                          ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     ",
+		"                                                                                     "
 	])
 	//global.currentLevel.print()
 
 	resize();
 	requestAnimFrame(update);
+
+	//this proly shouldnt be manditory but it doesnt work without this??? pixijs use err?
+	setTimeout(function(){
+		global.currentLevel.draw()
+		global.screen.render();
+	}, 10)
+	
 }
 
 $(document).ready(onReady)
