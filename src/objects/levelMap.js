@@ -16,7 +16,6 @@ function LevelMap(map){
 	this.viewPosY = 0
 
 	this.tileTypes = [new Player(), new PathFinder(), new Wall()]
-	console.log(this.tileTypes[0].character)
 	this.sprites = []
 
 	for(var i = 0;i<this.height;i++){

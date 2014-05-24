@@ -1,6 +1,9 @@
 function TileType(c, texture){
 	this.character = c
 	this.texture = new PIXI.Texture.fromImage(texture)
+	this.move = function(level, x, y){
+		return {x:x,y:y}
+	}
 }
 
 function PathFinder(){
