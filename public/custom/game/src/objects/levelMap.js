@@ -1,38 +1,26 @@
 function LevelMap(map){
-	this.map = []
-	this.copyMap = []
-	this.width = map[0].length
-	this.height = map.length
 
-	this.frameCount = 0;
-
-	this.viewWidth = 5
-	this.viewHeight = 3
-
-	this.viewWidth = this.width
-	this.viewHeight = this.height
-
-	this.viewPosX = 0
-	this.viewPosY = 0
-
-	this.tileTypes = [new Player(), new PathFinder(), new Wall()]
-	this.sprites = []
-
-	for(var i = 0;i<this.height;i++){
-		this.map[i]=[]
-		for(var j = 0;j<this.width;j++){
-			this.map[i][j] = map[i][j]
+	this.cloneMap = function(map) {
+		var created = []
+		for(var i = 0;i<map.length;i++){
+			created[i]=[]
+			for(var j = 0;j<map[0].length;j++){
+				created[i][j] = map[i][j]
+			}
 		}
+		return created
+	}
+
+	this.setMap = function(map){
+		this.map = this.cloneMap(map)
+		this.width = this.map[0].length
+		this.height = this.map.length
+		this.viewWidth = this.width
+		this.viewHeight = this.height
 	}
 
 	this.createCopyMap = function(){
-		this.copyMap = []
-		for(var i = 0;i<this.height;i++){
-			this.copyMap[i]=[]
-			for(var j = 0;j<this.width;j++){
-				this.copyMap[i][j] = this.map[i][j]
-			}
-		}
+		this.copyMap = this.cloneMap(this.map)
 	}
 
 	this.print = function(map){
@@ -147,4 +135,23 @@ function LevelMap(map){
 			}
 		}
 	}
+
+	this.map = []
+	this.copyMap = []
+
+
+	this.frameCount = 0;
+
+	this.viewPosX = 0
+	this.viewPosY = 0
+
+	this.tileTypes = [new Player(), new PathFinder(), new Wall()]
+	this.sprites = []
+
+	this.width = map[0].length
+	this.height = map.length
+	this.viewWidth = this.width
+	this.viewHeight = this.height
+
+	this.map = this.cloneMap(map)
 }

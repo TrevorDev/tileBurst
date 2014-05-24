@@ -16,6 +16,8 @@ var request = require('request');
 var fs = require('fs')
 var app = koa();
 
+var gameWorld =require("./lib/gameWorld")
+
 //REMOVE IN PRODUCTION??
 swig.setDefaults(config.templateOptions)
 
@@ -44,14 +46,19 @@ function defaultPageLoad(pageName, requiresLogin) {
 }
 
 var server = http.createServer(app.callback())
-var io = require('socket.io').listen(server);
-
+var io = require('socket.io').listen(server, { log: false });
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+	socket.playerData = {mapArea: null,x: 0,y: 0, health: 100, attack: 5, gold: 0}
+
+	gameWorld.addPlayerToMapArea(socket, 0, 0)
+
+	socket.emit('updateMap', { map: socket.playerData.mapArea.map });
+
+	socket.on('my other event', function (data) {
+		console.log(socket.id)
+		//console.log(data);
+	});
 });
 
 server.listen(config.appPort);
