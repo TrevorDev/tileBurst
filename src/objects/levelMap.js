@@ -15,9 +15,8 @@ function LevelMap(map){
 	this.viewPosX = 0
 	this.viewPosY = 0
 
-	this.characterTexture =  new PIXI.Texture.fromImage("assets/colors/blue.png")
-	this.badGuyTexture =  new PIXI.Texture.fromImage("assets/colors/red.png")
-	this.wallTexture =  new PIXI.Texture.fromImage("assets/colors/black.png")
+	this.tileTypes = [new Player(), new PathFinder(), new Wall()]
+	console.log(this.tileTypes[0].character)
 	this.sprites = []
 
 	for(var i = 0;i<this.height;i++){
@@ -50,23 +49,19 @@ function LevelMap(map){
 		}
 		this.sprites = []
 
-		
-		
-
 		for(var i = this.viewPosY;i<this.viewHeight;i++){
 			for(var j = this.viewPosX;j<this.viewWidth;j++){
-				if(this.getTile(j, i) != ' '){
-					if(this.getTile(j, i) == '.'){
-						var newSprite = new PIXI.Sprite(this.badGuyTexture)
-					}else if(this.getTile(j, i) == 'X'){
-						var newSprite = new PIXI.Sprite(this.characterTexture)
-					}else if(this.getTile(j, i) == 'O'){
-						var newSprite = new PIXI.Sprite(this.wallTexture)
-					}
-					newSprite.x = j*global.screen.canvas.width/this.viewWidth
-					newSprite.y = i*global.screen.canvas.height/this.viewHeight
-					this.sprites.push(newSprite)
-				}					
+				for(var k = 0; k < this.tileTypes.length; k++) {
+					if(this.getTile(j, i) != ' '){
+						if(this.getTile(j, i) == this.tileTypes[k].character){
+							var newSprite = new PIXI.Sprite(this.tileTypes[k].texture)
+							newSprite.x = j*global.screen.canvas.width/this.viewWidth
+							newSprite.y = i*global.screen.canvas.height/this.viewHeight
+							this.sprites.push(newSprite)
+						}
+						
+					}	
+				}				
 			}	
 		}
 
@@ -102,7 +97,6 @@ function LevelMap(map){
 			var start = graphMap.nodes[y][x]
 			var end = graphMap.nodes[player.y][player.x]
 			var ret = astar.search(graphMap, start, end)
-			console.log(ret)
 			if(this.getTile(ret[0].x, ret[0].y) == ' '){
 				this.swapTiles(x,y,ret[0].x,ret[0].y)
 			}

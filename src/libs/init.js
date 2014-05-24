@@ -47,7 +47,7 @@ function onReady()
 		"  .   O                                                                              ",
 		"      O                                                                              ",
 		"      O                                                                              ",
-		"      O          X                                                                   ",
+		"      O                                                                              ",
 		"      O                                                                              ",
 		"      O                                                                              ",
 		"      O                                                                              ",
@@ -85,7 +85,7 @@ function onReady()
 	setTimeout(function(){
 		global.currentLevel.draw()
 		global.screen.render();
-	}, 10)
+	}, 100)
 	
 }
 
