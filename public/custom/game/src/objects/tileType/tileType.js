@@ -17,3 +17,11 @@ function Player(){
 function Wall(){
 	TileType.call(this, "O", "/public/custom/game/assets/colors/black.png")
 }
+
+function Gold(){
+	TileType.call(this, "*", "/public/custom/game/assets/colors/gold.png")
+}
+
+function Stairs(){
+	TileType.call(this, "^", "/public/custom/game/assets/colors/gray.png")
+}

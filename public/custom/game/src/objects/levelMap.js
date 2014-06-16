@@ -19,6 +19,26 @@ function LevelMap(map){
 		this.viewHeight = this.height
 	}
 
+	this.genRandMap = function(w, h){
+		var created = []
+		for(var i = 0;i<h;i++){
+			created[i]=[]
+			for(var j = 0;j<w;j++){
+				var rand = Math.random()
+				var newBlock = " "
+				if (rand < 0.013) {
+					newBlock = "."
+				}else if(rand < 0.02){
+					newBlock = "*"
+				}
+				created[i][j] = newBlock
+			}
+		}
+		created[h-1][0] = "X"
+		created[0][w-1] = "^"
+		return created;
+	}
+
 	this.createCopyMap = function(){
 		this.copyMap = this.cloneMap(this.map)
 	}
@@ -38,7 +58,7 @@ function LevelMap(map){
 
 		for(var i = this.viewPosY;i<this.viewHeight;i++){
 			for(var j = this.viewPosX;j<this.viewWidth;j++){
-				for(var k = 0; k < this.tileTypes.length; k++) {
+				for(var k in this.tileTypes) {
 					if(this.getTile(j, i) != ' '){
 						if(this.getTile(j, i) == this.tileTypes[k].character){
 							var newSprite = new PIXI.Sprite(this.tileTypes[k].texture)
@@ -71,10 +91,14 @@ function LevelMap(map){
 
 	this.swapTiles = function(x, y, x2, y2, map){
 		if(!map){ map = this.map }
-
 		var tmp = this.getTile(x,y)
 		map[y][x] = map[y2][x2]
 		map[y2][x2] = tmp;
+	}
+
+	this.clearTile = function(x, y, map){
+		if(!map){ map = this.map }
+		map[y][x] = " "
 	}
 
 	this.moveBadGuy = function(x, y){	
@@ -118,6 +142,14 @@ function LevelMap(map){
 					}
 					if(this.getTile(nextX, nextY) == ' '){
 						this.swapTiles(j,i,nextX,nextY)
+					}else if(this.getTile(nextX, nextY) == this.tileTypes.stairs.character){
+						//this.swapTiles(j,i,nextX,nextY)
+						this.setMap(this.genRandMap(20, 10))
+					}else if(this.getTile(nextX, nextY) == this.tileTypes.gold.character){
+						this.gold++;
+						$("#goldCounter").html("Gold: "+this.gold)
+						this.swapTiles(j,i,nextX,nextY)
+						this.clearTile(j,i)
 					}
 				}
 			}
@@ -145,13 +177,12 @@ function LevelMap(map){
 	this.viewPosX = 0
 	this.viewPosY = 0
 
-	this.tileTypes = [new Player(), new PathFinder(), new Wall()]
+	this.tileTypes = {player: new Player(),pathFinder: new PathFinder(),wall: new Wall(), gold: new Gold(), stairs: new Stairs()}
 	this.sprites = []
+	this.gold = 0
+	this.health = 5
+	//this.map = this.cloneMap(map)
+	this.setMap(this.genRandMap(20, 10))
 
-	this.width = map[0].length
-	this.height = map.length
-	this.viewWidth = this.width
-	this.viewHeight = this.height
-
-	this.map = this.cloneMap(map)
+	
 }

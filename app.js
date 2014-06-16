@@ -14,7 +14,7 @@ var https = require('https')
 var http = require('http')
 var request = require('request');
 var fs = require('fs')
-var app = koa();
+var app = koa()
 
 var gameWorld =require("./lib/gameWorld")
 
@@ -55,9 +55,9 @@ io.sockets.on('connection', function (socket) {
 
 	socket.emit('updateMap', { map: socket.playerData.mapArea.map });
 
-	socket.on('my other event', function (data) {
-		console.log(socket.id)
-		//console.log(data);
+	socket.on('updatePlayer', function (data) {
+		socket.playerData.x = data.x;
+		socket.playerData.y = data.y;
 	});
 });
 
